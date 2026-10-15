@@ -24,7 +24,7 @@ Salesforce makes software that businesses use to manage their customers, sold on
 
 1. **Estimate the rent you'll collect.** For Salesforce, that's subscription sales, based on contracts already signed.
 2. **Subtract running costs:** staff, marketing, taxes. What's left is the cash the business actually produces.
-3. **Money later is worth less than money now.** £100 in five years is worth less than £100 today, because today's money could be earning a safe return elsewhere. So future cash is scaled down to today's value.
+3. **Money later is worth less than money now.** $100 in five years is worth less than $100 today, because today's money could be earning a safe return elsewhere. So future cash is scaled down to today's value.
 4. **Add it up, subtract what the company owes, divide by the number of shares.** That's a fair price per share.
 
 ## Three versions of the future

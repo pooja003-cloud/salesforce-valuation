@@ -19,6 +19,8 @@
 
 > Educational project, not investment advice.
 
+![Cover tab: key outputs, integrity checks and scenario snapshot](docs/images/cover.png)
+
 ---
 
 ## Why Salesforce
@@ -38,7 +40,7 @@ SEC filings ──► RPO revenue build ──► Income statement ──► Bal
 2. **Subscription revenue** = prior year-end current RPO × a conversion ratio (1.29–1.32x historically; 1.257x in FY27 reproduces management's $46.1–46.4B guidance).
 3. **Costs** are modeled as a share of revenue on a GAAP basis (stock compensation stays inside each cost line). Amortization of acquired intangibles is excluded from those percentages and follows its own schedule, so as acquisitions age the roll-off lifts GAAP operating income instead of turning into a hidden cash cost.
 4. **Balance sheet and cash flow** are fully linked. Unearned revenue, the cash customers prepay, is the key working-capital inflow. The balance sheet balances to zero in every year.
-5. **DCF**: unlevered free cash flow discounted at a 10.3% WACC (mid-year convention). The headline terminal value uses perpetuity growth of 3.0%. A 13x exit EV/EBITDA multiple is a cross-check: it implies 3.8% growth forever, so the two methods agree within a point. Net debt and share count come from the Jul 31, 2026 balance sheet.
+5. **DCF**: unlevered free cash flow discounted at a 10.3% WACC (mid-year convention). The headline terminal value uses perpetuity growth of 3.0%. A 13x exit EV/EBITDA multiple is shown as a cross-check. It is **calibrated, not independent**: it was set so its implied perpetual growth (3.8%) stays close to the 3% assumption, so the two methods agreeing is by construction. What it does tell you is that holding today's ~18x FY27E GAAP EBITDA multiple into FY31 would require far more growth than the model assumes; the cross-check therefore assumes a de-rating from 18x to 13x as revenue growth slows from ~11% to ~9%. (On GAAP EBITDA, which counts stock comp as a cost; 13x is ~10x on adjusted EBITDA.) Net debt and share count come from the Jul 31, 2026 balance sheet.
 
 ## Key judgment calls
 
@@ -46,10 +48,20 @@ SEC filings ──► RPO revenue build ──► Income statement ──► Bal
 |---|---|---|
 | Stock comp treated as a real cost | The dilution to shareholders is real | Adding it back raises base value to ~$305 |
 | Perpetuity growth as the headline method | It values the same cash flow the model forecasts | Exit multiple at 13x gives $245 as a cross-check; at 16x it would give $293 but imply 4.9% growth forever |
+| 13x exit multiple, calibrated | Chosen to keep implied growth near 3%, i.e. a de-rating from today's ~18x as growth slows; not taken from peers | Each 2x turn moves the cross-check by roughly $30 a share (see DCF sensitivity table) |
+| Margins expand in the base case | Sales & marketing efficiency (~50 bp a year) plus amortization roll-off | Non-GAAP operating margin 34.0% (FY26) → 37.8% (FY31), about 4 points; GAAP 20.1% → 28.2% |
 | WACC built from a 5.21% 10-year Treasury | Reflects current rates, not an old 8% template | At 8% WACC the base value would be ~$335 |
 | Finance-lease costs kept inside operating costs | Simpler than splitting into depreciation plus financing-line principal; treats them as if paid in cash | Slightly conservative versus the company's own FCF definition |
 | Undisclosed acquisitions excluded | Contentful and Fin prices not yet public | Will be added when disclosed |
 | Debt assumed to refinance | Keeps the model simple | Cash builds to ~$48B by FY31 |
+
+## Margin path vs management's targets
+
+The base case assumes about **4 points of non-GAAP operating margin expansion** (34.0% in FY26 to 37.8% in FY31). GAAP margin rises faster (20.1% to 28.2%) because amortization of acquired intangibles rolls off from $1.9B to $0.5B.
+
+Management's own yardstick is its "50 by FY30" framework: subscription & support growth (constant currency) plus non-GAAP operating margin should total 50 by the end of FY30 ([Oct 2025 investor day](https://investor.salesforce.com/news/news-details/2025/Salesforce-Announces-New-FY30-Revenue-Target-of-60B-10-Organic-FY26-FY30-CAGR/)). The model's FY30 score is **46.9** (10.0% growth + 36.9% margin; reported rather than constant-currency growth), so the base case is more conservative than management's target. FY30 revenue in the model is $61.7B including Informatica, against management's $60B+ target excluding it.
+
+![DCF tab: terminal value, equity bridge and sensitivity tables](docs/images/dcf-valuation.png)
 
 ## Repository contents
 
@@ -57,13 +69,14 @@ SEC filings ──► RPO revenue build ──► Income statement ──► Bal
 model/Salesforce_CRM_Model.xlsx   The model (open in Excel)
 scripts/build_model.py            Rebuilds the workbook from scratch with openpyxl
 docs/project-explained.md         Plain-English explanation for non-finance readers
+docs/images/                      Screenshots of the Cover and DCF tabs
 ```
 
 ### Workbook tabs
 
 | Tab | What it holds |
 |---|---|
-| **Cover** | Key outputs, integrity checks (balance sheet, positive cash, WACC > growth, exit multiple vs perpetuity consistency), size of the historical cash-flow plug, scenario snapshot, how-to |
+| **Cover** | Key outputs, integrity checks (balance sheet, positive cash, WACC > growth, exit-multiple calibration), today's market multiple, FY30 "growth + margin" score, the historical cash-flow plug, scenario snapshot, how-to |
 | **Assumptions** | All forecast drivers. Scenario switch in cell `B4` (1 Downside, 2 Base, 3 Upside) |
 | **Revenue Build** | RPO-driven revenue engine, billings, FY27 guidance check |
 | **IS / BS / CF** | Income statement, balance sheet (with balance check), cash flow statement |
@@ -99,6 +112,8 @@ The script writes formulas, not values. Open the file in Excel and it calculates
 ## Changelog
 
 - **Model review (Oct 15, 2026).** Amortization of acquired intangibles moved out of the cost percentages so its roll-off raises operating income; headline switched to perpetuity growth with a 13x exit multiple as a consistency-checked cross-check (was a 50/50 blend with 16x, which implied 4.9% growth forever); both FCF definitions labeled; lease wording corrected; the cash-flow tie-out check (which could not fail) replaced by a plug-size disclosure; 10-year yield re-sourced to FRED and beta to a named 5-year monthly window. Base value moved from $230.36 to $221.76; the conclusion (roughly fairly valued) is unchanged.
+
+- **Second review (Oct 15, 2026).** 13x exit multiple now disclosed as calibrated, with today's 18.0x market multiple shown for context; margin path compared with management's "50 by FY30" target; historical working-capital lines filled from the reported cash flow statements, so the remaining FY25–FY26 plug (max 10.6% of CFO, was 26.8%) is exactly gains on strategic investments plus operating lease payments; screenshots added. Valuation unchanged.
 
 ## Roadmap
 

@@ -486,7 +486,13 @@ row_f(C, 11, lambda c, p: f"=BS!{c}18-BS!{p}18")
 label(C, 12, "Increase / (decrease) in unearned revenue", indent=1)
 row_hist(C, 12, [1744, 1623, 1584, 2924])
 row_f(C, 12, lambda c, p: f"=BS!{c}19-BS!{p}19")
-label(C, 13, "Other operating items, net (historical reconciling item)", indent=1)
+row_hist(C, 8, [-995, -659, -490, -2160],
+         comment="Reported CF statement lines (8-K Ex. 99.1). Used instead of BS deltas, which include acquired balances")
+row_hist(C, 9, [None, None, -1495, 819])
+row_hist(C, 10, [-677, 53, -26, -614],
+         comment="Net = costs capitalized + amortization of capitalized costs, both from the reported CF statement")
+row_hist(C, 11, [None, None, 1089, 1014])
+label(C, 13, "Other operating items, net (plug: gains on strategic investments, operating lease payments; FY23-24 also prepaid & AP)", indent=1)
 row_f(C, 13, lambda c, p: f"={c}15-SUM({c}5:{c}12)", cols=HIST)
 row_f(C, 13, lambda c, p: "=0")
 label(C, 14, "Cash from operations (CFO)", bold=True)
@@ -595,7 +601,9 @@ dput(30, "WACC", "=B28*B22+B29*B25", PCT, bold=True, key=True)
 label(D, 32, "Terminal value inputs", section=True)
 dput(33, "Perpetuity growth rate", 0.03, PCT, True, key=True, note="Nominal; below long-run nominal GDP")
 dput(34, "Exit EV / EBITDA multiple (on FY31 GAAP EBITDA)", 13.0, MULT1, True, key=True,
-     note="GAAP EBITDA (SBC as a cost). 13x GAAP ~ 10x adj. EBITDA. Chosen so implied growth (B64) stays close to B33")
+     note="CALIBRATED, not from peers: set so its implied perpetual growth (B64) sits near B33, so it is a consistency "
+          "check, not independent evidence. Implies a de-rating from today's ~18x (B65) as growth slows from ~11% to ~9%. "
+          "GAAP basis (SBC as a cost); ~10x on adjusted EBITDA")
 dput(35, "Weight on perpetuity method in headline value", 1.0, PCT, True,
      note="Headline = perpetuity growth (consistent with SBC-as-cost UFCF). Exit multiple is a cross-check; set 50% to blend")
 
@@ -654,6 +662,9 @@ dput(61, "PV of terminal value - perpetuity", "=B59/(1+B30)^B57")
 dput(62, "PV of terminal value - exit multiple", "=B60/(1+B30)^B57")
 dput(63, "Implied exit EV/EBITDA from perpetuity method", "=B59/IS!J42", MULT1)
 dput(64, "Implied perpetuity growth from exit multiple", "=(B60*B30-J47)/(B60+J47)", PCT)
+dput(65, "Today's EV / FY27E GAAP EBITDA (market-implied, for reference)",
+     "=(B26+B15-B11-B12-B13*(1-B14))/IS!F42", MULT1,
+     note="EV at today's price with the same net debt as the bridge. The 13x exit multiple is a de-rating from this level")
 
 # Bridge
 put(D, "A66", "Enterprise value to equity value bridge", BOLDW, fill=HEADFILL)
@@ -748,7 +759,7 @@ for i, (a, b) in enumerate(src, start=3):
 # COVER content
 # =====================================================================
 cv.sheet_view.showGridLines = False
-cv.column_dimensions["A"].width = 50
+cv.column_dimensions["A"].width = 74
 for c in "BCDE":
     cv.column_dimensions[c].width = 16
 put(cv, "A1", "Salesforce, Inc. (NYSE: CRM) - 3-Statement Model & DCF", TITLE)
@@ -772,42 +783,45 @@ outs = [
     ("FY31E non-GAAP operating margin", "=IS!J44", PCT),
     ("FY31E free cash flow: CFO - capex (SBC added back, after interest)", "=CF!J32", NUM),
     ("FY31E unlevered FCF valued in the DCF (SBC as a cost, before interest)", "=DCF!J47", NUM),
+    ("Today's EV / FY27E GAAP EBITDA (exit multiple of 13x is a de-rating from this)", "=DCF!B65", MULT1),
+    ("FY30E sub. growth + non-GAAP op. margin (management target: 50 by FY30)", "='Revenue Build'!I14+IS!I44", PCT),
 ]
 for i, (t, f, fmt) in enumerate(outs, start=5):
     put(cv, f"A{i}", t, BLACK)
     put(cv, f"B{i}", f, GREEN, fmt, bold=True)
 put(cv, "C12", "='Revenue Build'!B29", GREEN, bold=True)
 
-put(cv, "A20", "Model integrity checks", BOLDW, fill=HEADFILL)
+put(cv, "A22", "Model integrity checks", BOLDW, fill=HEADFILL)
 for c in "BCD":
-    cv[f"{c}20"].fill = HEADFILL
-put(cv, "A21", "Balance sheet balances in every year?")
-put(cv, "B21", '=IF(SUMPRODUCT(ABS(BS!D31:J31))<0.01,"OK","ERROR")', BLACK, bold=True)
-put(cv, "A22", "Forecast cash stays positive?")
-put(cv, "B22", '=IF(MIN(BS!F5:J5)>0,"OK","NEGATIVE CASH")', BLACK, bold=True)
-put(cv, "A23", "WACC > terminal growth?")
-put(cv, "B23", '=IF(DCF!B30>DCF!B33,"OK","ERROR")', BLACK, bold=True)
-put(cv, "A24", "Exit multiple consistent with perpetuity growth (implied g within 1 pt)?")
-put(cv, "B24", '=IF(ABS(DCF!B64-DCF!B33)<=0.01,"OK","CHECK")', BLACK, bold=True)
-put(cv, "A25", "Info: largest historical 'other operating' plug, % of reported CFO")
-put(cv, "B25", "=MAX(ABS(CF!B13/CF!B15),ABS(CF!C13/CF!C15),ABS(CF!D13/CF!D15),ABS(CF!E13/CF!E15))", BLACK, PCT, bold=True)
-put(cv, "C25", "Plug forces the CFO tie; size = what the simplified CF lines don't explain", ITAL)
+    cv[f"{c}22"].fill = HEADFILL
+put(cv, "A23", "Balance sheet balances in every year?")
+put(cv, "B23", '=IF(SUMPRODUCT(ABS(BS!D31:J31))<0.01,"OK","ERROR")', BLACK, bold=True)
+put(cv, "A24", "Forecast cash stays positive?")
+put(cv, "B24", '=IF(MIN(BS!F5:J5)>0,"OK","NEGATIVE CASH")', BLACK, bold=True)
+put(cv, "A25", "WACC > terminal growth?")
+put(cv, "B25", '=IF(DCF!B30>DCF!B33,"OK","ERROR")', BLACK, bold=True)
+put(cv, "A26", "Exit multiple calibration holds (implied growth within 1 pt of B33)?")
+put(cv, "B26", '=IF(ABS(DCF!B64-DCF!B33)<=0.01,"OK","CHECK")', BLACK, bold=True)
+put(cv, "C26", "Calibration, not independent evidence: the multiple was chosen to pass this", ITAL)
+put(cv, "A27", "Info: FY25-FY26 'other operating' plug, largest % of reported CFO")
+put(cv, "B27", "=MAX(ABS(CF!D13/CF!D15),ABS(CF!E13/CF!E15))", BLACK, PCT, bold=True)
+put(cv, "C27", "What the modeled CF lines don't explain: gains on investments and operating lease payments", ITAL)
 
-put(cv, "A27", "Scenario snapshot (values pasted at build; re-run by changing Assumptions!B4)", BOLDW, fill=HEADFILL)
+put(cv, "A29", "Scenario snapshot (values pasted at build; re-run by changing Assumptions!B4)", BOLDW, fill=HEADFILL)
 for c in "BCD":
-    cv[f"{c}27"].fill = HEADFILL
+    cv[f"{c}29"].fill = HEADFILL
 for c, t in zip("BCD", ["Downside", "Base", "Upside"]):
-    put(cv, f"{c}28", t, BOLD)
-    cv[f"{c}28"].alignment = Alignment(horizontal="right")
+    put(cv, f"{c}30", t, BOLD)
+    cv[f"{c}30"].alignment = Alignment(horizontal="right")
 snap_rows = ["Value per share - headline ($)", "Upside / (downside)", "Value per share - exit multiple ($)",
              "FY31E revenue ($mm)", "FY31E GAAP operating margin", "FY31E FCF: CFO - capex ($mm)",
              "FY31E unlevered FCF in DCF ($mm)"]
-for i, t in enumerate(snap_rows, start=29):
+for i, t in enumerate(snap_rows, start=31):
     put(cv, f"A{i}", t)
 
-put(cv, "A38", "How to use", BOLDW, fill=HEADFILL)
+put(cv, "A40", "How to use", BOLDW, fill=HEADFILL)
 for c in "BCD":
-    cv[f"{c}38"].fill = HEADFILL
+    cv[f"{c}40"].fill = HEADFILL
 howto = [
     "1. Flip the scenario on Assumptions!B4 (1 Downside, 2 Base, 3 Upside). Everything recalculates.",
     "2. Revenue engine: Revenue Build. Subscription revenue = prior year-end cRPO x conversion ratio; cRPO growth is the main lever.",
@@ -817,10 +831,19 @@ howto = [
     "6. Sensitivity tables at DCF!A80 and A89.",
     "Colour code: blue = hardcoded input, black = formula, green = link to another sheet, yellow = key lever.",
 ]
-for i, t in enumerate(howto, start=39):
+for i, t in enumerate(howto, start=41):
     put(cv, f"A{i}", t)
 
+for ws in (A, D):
+    for row in ws.iter_rows(min_col=11, max_col=11):
+        for cell in row:
+            if cell.value:
+                cell.alignment = Alignment(wrap_text=True, vertical="top")
 for ws in wb.worksheets:
+    ws.page_setup.orientation = "landscape"
+    ws.page_setup.fitToWidth = 1
+    ws.page_setup.fitToHeight = 0
+    ws.sheet_properties.pageSetUpPr.fitToPage = True
     for row in ws.iter_rows():
         for cell in row:
             if cell.font and cell.font.name != FONT:
@@ -836,13 +859,13 @@ SNAPSHOT = {  # SNAPSHOT_DATA: headline, upside, exit value, FY31 rev, FY31 GAAP
 }
 FMTS = ["$#,##0.00", "0.0%;(0.0%)", "$#,##0.00", "#,##0", "0.0%", "#,##0", "#,##0"]
 for col, sc in zip("BCD", ("1", "2", "3")):
-    for r, (v, f) in enumerate(zip(SNAPSHOT.get(sc, [None] * 7), FMTS), start=29):
+    for r, (v, f) in enumerate(zip(SNAPSHOT.get(sc, [None] * 7), FMTS), start=31):
         c = cv[f"{col}{r}"]
         c.value = v
         c.number_format = f
         c.font = Font(name="Arial", size=10, italic=True)
-cv["A36"] = "Snapshot uses base valuation inputs (WACC, terminal growth, exit multiple) in all three scenarios."
-cv["A36"].font = ITAL
+cv["A38"] = "Snapshot uses base valuation inputs (WACC, terminal growth, exit multiple) in all three scenarios."
+cv["A38"].font = ITAL
 
 OUT = Path(__file__).resolve().parent.parent / "model" / "Salesforce_CRM_Model.xlsx"
 wb.save(OUT)
