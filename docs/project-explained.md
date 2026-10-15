@@ -2,7 +2,7 @@
 
 ## The one-line version
 
-Buying a share is buying a small piece of a business. This project works out whether one share of Salesforce is a fair price for the money that business will make over time. The answer: it's worth about $230, almost exactly the $236 it trades at.
+Buying a share is buying a small piece of a business. This project works out whether one share of Salesforce is a fair price for the money that business will make over time. The answer: it's worth about $222, a little below the $236 it trades at.
 
 ## Whose question is this?
 
@@ -31,22 +31,23 @@ Salesforce makes software that businesses use to manage their customers, sold on
 
 | Story | What happens | Fair price |
 |---|---|---:|
-| Gloomy | Growth slows, AI costs eat into profits | ~$180 |
-| Middle | Roughly what the company itself expects | ~$230 |
-| Optimistic | Its AI products take off | ~$265 |
+| Gloomy | Growth slows, AI costs eat into profits | ~$171 |
+| Middle | Roughly what the company itself expects | ~$222 |
+| Optimistic | Its AI products take off | ~$256 |
 
-The actual price, $236, sits right in the middle, so the market is betting on the middle story.
+The actual price, $236, sits between the middle and optimistic stories, so the market is leaning slightly toward the hopeful version.
 
 ## What I learned
 
 - **A share price is a bet on the future.** It only makes sense once you spell out what you're assuming about growth and costs.
-- **Small assumptions matter a lot.** Change the return you expect by one percentage point and fair value moves by roughly $10–20 a share.
+- **Check your work against itself.** I valued the company two ways, and at first they disagreed by about $60 a share. Finding out why (an assumption that quietly implied the company would grow fast forever) taught me more than the answer itself.
+- **Small assumptions matter a lot.** Change the return you expect by one percentage point and fair value moves by roughly $30–40 a share.
 - **Interest rates affect every investment.** Safe government bonds pay over 5% right now, so investors demand more from riskier things like tech stocks, which pulls their fair value down.
-- **How a company pays its staff matters.** Salesforce pays a large part of salaries in shares. Ignoring that cost would make the company look about 20% more valuable.
+- **How a company pays its staff matters.** Salesforce pays a large part of salaries in shares. Ignoring that cost would make the company look about a third more valuable.
 - **"Fair price" is a valid answer.** Not every analysis ends in "buy". Knowing what not to overpay for is useful too.
 
 ## The outcome
 
 1. A full model that turns Salesforce's real financial reports into a fair value per share.
-2. A clear conclusion: worth about $230, roughly what it costs. Buying only makes sense if you believe its AI push will beat expectations.
+2. A clear conclusion: worth about $222, slightly less than it costs. Buying only makes sense if you believe its AI push will beat expectations.
 3. Three scenarios and sensitivity tables showing how the answer changes when assumptions change.

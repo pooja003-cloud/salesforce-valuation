@@ -161,26 +161,29 @@ arow(18, "Professional services growth - Upside", [0.02] * 5)
 live(19, "Professional services growth - LIVE", 16)
 
 label(A, 21, "Cost structure (GAAP, SBC embedded in each line)", section=True)
-arow(22, "Cost of sub & support (% of sub rev) - Downside", [0.185] * 5,
+arow(22, "Cost of sub & support excl. amortization (% of sub rev) - Downside", [0.1675] * 5,
      note="Downside: AI inference/compute costs pressure gross margin")
-arow(23, "Cost of sub & support (% of sub rev) - Base", [0.175] * 5, note="Historical: 20.1% / 19.0% / 17.4% / 17.3%")
-arow(24, "Cost of sub & support (% of sub rev) - Upside", [0.170] * 5)
-live(25, "Cost of sub & support (% of sub rev) - LIVE", 22)
+arow(23, "Cost of sub & support excl. amortization (% of sub rev) - Base", [0.1575] * 5,
+     note="Excl. acquired-intangible amortization: FY25 15.3%, FY26 15.5% (incl.: 17.4% / 17.3%)")
+arow(24, "Cost of sub & support excl. amortization (% of sub rev) - Upside", [0.1525] * 5)
+live(25, "Cost of sub & support excl. amortization - LIVE", 22)
 arow(26, "Cost of prof. services (% of PS rev)", [1.15] * 5, note="Historical: 109% / 102% / 110% / 116% - PS runs at a loss")
 arow(27, "R&D (% of revenue)", [0.148] * 5, note="Historical: 16.1% / 14.1% / 14.5% / 14.4%; FY27 adds Informatica R&D")
-arow(28, "Sales & marketing (% of revenue) - Downside", [0.348, 0.348, 0.346, 0.344, 0.342], key=True)
-arow(29, "Sales & marketing (% of revenue) - Base", [0.345, 0.340, 0.335, 0.330, 0.325], key=True,
-     note="Historical: 43.1% / 36.9% / 35.0% / 34.5%. Base = ~50bp/yr efficiency")
-arow(30, "Sales & marketing (% of revenue) - Upside", [0.343, 0.335, 0.327, 0.319, 0.311], key=True)
-live(31, "Sales & marketing (% of revenue) - LIVE", 28)
+arow(28, "Sales & marketing excl. amortization (% of revenue) - Downside", [0.324, 0.324, 0.322, 0.320, 0.318], key=True)
+arow(29, "Sales & marketing excl. amortization (% of revenue) - Base", [0.321, 0.316, 0.311, 0.306, 0.301], key=True,
+     note="Excl. amortization: FY25 32.6%, FY26 32.2% (incl.: 35.0% / 34.5%). Base = ~50bp/yr efficiency")
+arow(30, "Sales & marketing excl. amortization (% of revenue) - Upside", [0.319, 0.311, 0.303, 0.295, 0.287], key=True)
+live(31, "Sales & marketing excl. amortization - LIVE", 28)
 arow(32, "G&A (% of revenue)", [0.074, 0.073, 0.072, 0.071, 0.070], note="Historical: 8.1% / 7.3% / 7.5% / 7.2%")
 arow(33, "Restructuring (% of revenue)", [0.010, 0.005, 0.005, 0.005, 0.005], note="FY26 1.4%; assume tapering")
 arow(34, "Stock-based comp (% of revenue) - memo, already in opex", [0.083] * 5,
      note="Historical: 10.5% / 8.0% / 8.4% / 8.5%")
 arow(35, "Amortization of acquired intangibles ($mm)", [1900, 1700, 1500, 1200, 900], NUM,
-     note="FY26 $1,687mm; Informatica adds a full year in FY27, then roll-off. Capped at remaining balance")
+     note="FY26 $1,687mm; Informatica adds a full year in FY27, then roll-off. Capped at remaining balance. "
+          "Added to cost of revenue and S&M on the IS, so the roll-off lifts GAAP EBIT")
 arow(36, "Depreciation (% of beginning PP&E)", [0.20] * 5,
-     note="Owned PP&E only. Finance-lease depreciation and lease principal payments are excluded (roughly offset)")
+     note="Owned PP&E only. Finance-lease costs stay inside the % of revenue cost lines as if paid in cash, "
+          "instead of non-cash depreciation plus financing-line principal payments")
 arow(37, "Capex (% of revenue)", [0.015] * 5, note="FY27 guidance: ~1.5% of revenue")
 arow(38, "Effective tax rate", [0.223, 0.215, 0.215, 0.215, 0.215], note="FY27 GAAP guidance ~22.3%")
 arow(39, "Interest rate on average debt", [0.045] * 5, note="Blend of legacy low-coupon notes and 2026 issuance")
@@ -208,6 +211,8 @@ arow(55, "Dividends ($mm)", [1480, None, None, None, None], NUM, note="Q2 FY27 d
 arow(56, "Dividend growth", [None, 0.05, 0.05, 0.05, 0.05])
 arow(57, "Proceeds from employee stock plans ($mm)", [1000] * 5, NUM, note="FY25 $1,540mm; FY26 $1,039mm")
 arow(58, "Diluted shares (mm)", [838, None, None, None, None], NUM, note="FY27 guidance: 838mm weighted average")
+arow(60, "Share of intangible amortization booked in cost of revenue", [0.41] * 5,
+     note="FY26: $692mm of $1,687mm in cost of revenue; remainder in sales & marketing")
 arow(59, "Annual change in diluted shares", [None, -0.015, -0.015, -0.015, -0.015],
      note="Net of SBC dilution and buybacks")
 
@@ -287,7 +292,7 @@ row_f(I, 8, lambda c, p: f"={c}7/{p}7-1", cols=COLS[1:], fmt=PCT)
 
 label(I, 10, "Cost of revenue - subscription & support", indent=1)
 row_hist(I, 10, [5821, 6177, 6198, 6796])
-row_f(I, 10, lambda c, p: f"={c}5*Assumptions!{c}25")
+row_f(I, 10, lambda c, p: f"={c}5*Assumptions!{c}25+{c}39*Assumptions!{c}60")
 label(I, 11, "Cost of revenue - professional services", indent=1)
 row_hist(I, 11, [2539, 2364, 2445, 2474])
 row_f(I, 11, lambda c, p: f"={c}6*Assumptions!{c}26")
@@ -304,7 +309,7 @@ row_hist(I, 16, [5055, 4906, 5493, 5993])
 row_f(I, 16, lambda c, p: f"={c}7*Assumptions!{c}27")
 label(I, 17, "Sales & marketing", indent=1)
 row_hist(I, 17, [13526, 12877, 13257, 14345])
-row_f(I, 17, lambda c, p: f"={c}7*Assumptions!{c}31")
+row_f(I, 17, lambda c, p: f"={c}7*Assumptions!{c}31+{c}39*(1-Assumptions!{c}60)")
 label(I, 18, "General & administrative", indent=1)
 row_hist(I, 18, [2553, 2534, 2836, 3000])
 row_f(I, 18, lambda c, p: f"={c}7*Assumptions!{c}32")
@@ -574,9 +579,9 @@ dput(16, "Treat SBC as a real cost? (1 = yes, 0 = add back)", 1, "0", True,
      "1 = do NOT add SBC back to FCF (conservative, dilution is real). 0 = sell-side style add-back", key=True)
 
 label(D, 18, "Discount rate (WACC)", section=True)
-dput(19, "Risk-free rate (10Y UST)", 0.052, PCT, True, "10Y Treasury ~5.19-5.24%, Oct 9-13, 2026")
+dput(19, "Risk-free rate (10Y UST)", 0.0521, PCT, True, "FRED DGS10: 5.21% on Oct 13, 2026 (latest close before valuation date)")
 dput(20, "Equity risk premium", 0.05, PCT, True, "Damodaran-style implied ERP range 4.5-5.5%")
-dput(21, "Levered beta", 1.26, '0.00', True, "5Y monthly beta, stockanalysis.com")
+dput(21, "Levered beta", 1.26, '0.00', True, "Yahoo Finance 'Beta (5Y monthly)' 1.26 vs S&P 500; stockanalysis.com 'Beta (5Y)' 1.26")
 dput(22, "Cost of equity (CAPM)", "=B19+B21*B20", PCT, bold=True)
 dput(23, "Pre-tax cost of debt", 0.055, PCT, True, "~Rf + 30bp spread for A-rated issuer")
 dput(24, "Tax rate", 0.21, PCT, True, "US federal statutory")
@@ -589,9 +594,10 @@ dput(30, "WACC", "=B28*B22+B29*B25", PCT, bold=True, key=True)
 
 label(D, 32, "Terminal value inputs", section=True)
 dput(33, "Perpetuity growth rate", 0.03, PCT, True, key=True, note="Nominal; below long-run nominal GDP")
-dput(34, "Exit EV / EBITDA multiple (on FY31 GAAP EBITDA)", 16.0, MULT1, True, key=True,
-     note="CRM trades ~17-18x FY27E GAAP EBITDA today; assume some compression by FY31")
-dput(35, "Weight on perpetuity method in blended value", 0.5, PCT, True)
+dput(34, "Exit EV / EBITDA multiple (on FY31 GAAP EBITDA)", 13.0, MULT1, True, key=True,
+     note="GAAP EBITDA (SBC as a cost). 13x GAAP ~ 10x adj. EBITDA. Chosen so implied growth (B64) stays close to B33")
+dput(35, "Weight on perpetuity method in headline value", 1.0, PCT, True,
+     note="Headline = perpetuity growth (consistent with SBC-as-cost UFCF). Exit multiple is a cross-check; set 50% to blend")
 
 # FCF build
 hdr = 37
@@ -651,7 +657,7 @@ dput(64, "Implied perpetuity growth from exit multiple", "=(B60*B30-J47)/(B60+J4
 
 # Bridge
 put(D, "A66", "Enterprise value to equity value bridge", BOLDW, fill=HEADFILL)
-for c, t in zip("BCD", ["Perpetuity", "Exit multiple", "Blended"]):
+for c, t in zip("BCD", ["Perpetuity", "Exit multiple", "Headline"]):
     put(D, f"{c}66", t, BOLDW, fill=HEADFILL)
     D[f"{c}66"].alignment = Alignment(horizontal="right")
 rows = [
@@ -721,8 +727,11 @@ src = [
      "Salesforce Q4 FY24 earnings release, 8-K Ex. 99.1 (Feb 28, 2024): https://www.sec.gov/Archives/edgar/data/1108524/000110852424000002/crm-q4fy24xexhibit991.htm"),
     ("Q2 FY27 balance sheet (Jul 31, 2026), ASR, debt, raised FY27 guidance",
      "Salesforce Q2 FY27 earnings release (Aug 26, 2026): https://investor.salesforce.com/files/doc_financials/2027/q2/CRM-Q2-FY27-Earnings-Press-Release.pdf"),
-    ("Share price, shares outstanding, beta", "stockanalysis.com/stocks/crm (close Oct 14, 2026)"),
-    ("10-year Treasury yield", "themortgagereports.com (Oct 13, 2026: 5.19%); etfdb.com (Oct 9, 2026: 5.24%)"),
+    ("Share price, shares outstanding", "stockanalysis.com/stocks/crm (close Oct 14, 2026)"),
+    ("Beta", "Yahoo Finance 'Beta (5Y monthly)' = 1.26 (monthly returns vs S&P 500, 5 years); "
+     "cross-checked with stockanalysis.com 'Beta (5Y)' = 1.26 (S&P Global data)"),
+    ("10-year Treasury yield", "FRED series DGS10 (Board of Governors via St. Louis Fed): 5.21% on Oct 13, 2026. "
+     "https://fred.stlouisfed.org/series/DGS10"),
     ("", ""),
     ("Combined balance sheet lines", "Capitalized contract costs, operating lease liabilities and debt combine current + noncurrent. "
      "'Paid-in capital, common stock & AOCI' = common stock + APIC + AOCI."),
@@ -750,59 +759,65 @@ for c in "BCD":
     cv[f"{c}4"].fill = HEADFILL
 outs = [
     ("Active scenario", "=Assumptions!C4", None),
-    ("Implied value per share - blended ($)", "=DCF!D74", USD),
-    ("Implied value per share - perpetuity ($)", "=DCF!B74", USD),
-    ("Implied value per share - exit multiple ($)", "=DCF!C74", USD),
+    ("Value per share - headline: perpetuity growth ($)", "=DCF!D74", USD),
+    ("Value per share - exit multiple, cross-check ($)", "=DCF!C74", USD),
+    ("Implied perpetuity growth in the exit multiple", "=DCF!B64", PCT),
     ("Current share price ($)", "=DCF!B6", USD),
-    ("Upside / (downside) - blended", "=DCF!D76", PCT),
+    ("Upside / (downside) - headline", "=DCF!D76", PCT),
     ("WACC", "=DCF!B30", PCT),
     ("FY27E revenue / within guidance?", "=IS!F7", NUM),
     ("FY31E revenue", "=IS!J7", NUM),
     ("FY26A-FY31E revenue CAGR", "=(IS!J7/IS!E7)^(1/5)-1", PCT),
     ("FY31E GAAP operating margin", "=IS!J22", PCT),
     ("FY31E non-GAAP operating margin", "=IS!J44", PCT),
-    ("FY31E free cash flow (CFO - capex)", "=CF!J32", NUM),
+    ("FY31E free cash flow: CFO - capex (SBC added back, after interest)", "=CF!J32", NUM),
+    ("FY31E unlevered FCF valued in the DCF (SBC as a cost, before interest)", "=DCF!J47", NUM),
 ]
 for i, (t, f, fmt) in enumerate(outs, start=5):
     put(cv, f"A{i}", t, BLACK)
     put(cv, f"B{i}", f, GREEN, fmt, bold=True)
 put(cv, "C12", "='Revenue Build'!B29", GREEN, bold=True)
 
-put(cv, "A19", "Model integrity checks", BOLDW, fill=HEADFILL)
+put(cv, "A20", "Model integrity checks", BOLDW, fill=HEADFILL)
 for c in "BCD":
-    cv[f"{c}19"].fill = HEADFILL
-put(cv, "A20", "Balance sheet balances in every year?")
-put(cv, "B20", '=IF(SUMPRODUCT(ABS(BS!D31:J31))<0.01,"OK","ERROR")', BLACK, bold=True)
-put(cv, "A21", "Forecast cash stays positive?")
-put(cv, "B21", '=IF(MIN(BS!F5:J5)>0,"OK","NEGATIVE CASH")', BLACK, bold=True)
-put(cv, "A22", "Historical CF ties to reported CFO?")
-put(cv, "B22", '=IF(SUMPRODUCT(ABS(CF!B14:E14-CF!B15:E15))<0.01,"OK","ERROR")', BLACK, bold=True)
+    cv[f"{c}20"].fill = HEADFILL
+put(cv, "A21", "Balance sheet balances in every year?")
+put(cv, "B21", '=IF(SUMPRODUCT(ABS(BS!D31:J31))<0.01,"OK","ERROR")', BLACK, bold=True)
+put(cv, "A22", "Forecast cash stays positive?")
+put(cv, "B22", '=IF(MIN(BS!F5:J5)>0,"OK","NEGATIVE CASH")', BLACK, bold=True)
 put(cv, "A23", "WACC > terminal growth?")
 put(cv, "B23", '=IF(DCF!B30>DCF!B33,"OK","ERROR")', BLACK, bold=True)
+put(cv, "A24", "Exit multiple consistent with perpetuity growth (implied g within 1 pt)?")
+put(cv, "B24", '=IF(ABS(DCF!B64-DCF!B33)<=0.01,"OK","CHECK")', BLACK, bold=True)
+put(cv, "A25", "Info: largest historical 'other operating' plug, % of reported CFO")
+put(cv, "B25", "=MAX(ABS(CF!B13/CF!B15),ABS(CF!C13/CF!C15),ABS(CF!D13/CF!D15),ABS(CF!E13/CF!E15))", BLACK, PCT, bold=True)
+put(cv, "C25", "Plug forces the CFO tie; size = what the simplified CF lines don't explain", ITAL)
 
-put(cv, "A25", "Scenario snapshot (values pasted at build; re-run by changing Assumptions!B4)", BOLDW, fill=HEADFILL)
+put(cv, "A27", "Scenario snapshot (values pasted at build; re-run by changing Assumptions!B4)", BOLDW, fill=HEADFILL)
 for c in "BCD":
-    cv[f"{c}25"].fill = HEADFILL
+    cv[f"{c}27"].fill = HEADFILL
 for c, t in zip("BCD", ["Downside", "Base", "Upside"]):
-    put(cv, f"{c}26", t, BOLD)
-    cv[f"{c}26"].alignment = Alignment(horizontal="right")
-snap_rows = ["Value per share - blended ($)", "Upside / (downside)", "FY31E revenue ($mm)",
-             "FY31E GAAP operating margin", "FY31E free cash flow ($mm)"]
-for i, t in enumerate(snap_rows, start=27):
+    put(cv, f"{c}28", t, BOLD)
+    cv[f"{c}28"].alignment = Alignment(horizontal="right")
+snap_rows = ["Value per share - headline ($)", "Upside / (downside)", "Value per share - exit multiple ($)",
+             "FY31E revenue ($mm)", "FY31E GAAP operating margin", "FY31E FCF: CFO - capex ($mm)",
+             "FY31E unlevered FCF in DCF ($mm)"]
+for i, t in enumerate(snap_rows, start=29):
     put(cv, f"A{i}", t)
 
-put(cv, "A34", "How to use", BOLDW, fill=HEADFILL)
+put(cv, "A38", "How to use", BOLDW, fill=HEADFILL)
 for c in "BCD":
-    cv[f"{c}34"].fill = HEADFILL
+    cv[f"{c}38"].fill = HEADFILL
 howto = [
     "1. Flip the scenario on Assumptions!B4 (1 Downside, 2 Base, 3 Upside). Everything recalculates.",
     "2. Revenue engine: Revenue Build. Subscription revenue = prior year-end cRPO x conversion ratio; cRPO growth is the main lever.",
     "3. Costs and working capital are % of revenue on Assumptions; historical ratios are listed next to each input.",
     "4. Statements: IS -> BS -> CF. Ending cash on CF feeds BS cash; BS!31 must be 0 in every year.",
-    "5. DCF: B16 toggles whether SBC is treated as a real cost (default 1 = yes). Sensitivity tables at DCF!A80 and A89.",
+    "5. DCF: headline = perpetuity growth; exit multiple is a cross-check (DCF!B35 sets the weight). B16 toggles SBC as a cost.",
+    "6. Sensitivity tables at DCF!A80 and A89.",
     "Colour code: blue = hardcoded input, black = formula, green = link to another sheet, yellow = key lever.",
 ]
-for i, t in enumerate(howto, start=35):
+for i, t in enumerate(howto, start=39):
     put(cv, f"A{i}", t)
 
 for ws in wb.worksheets:
@@ -814,19 +829,20 @@ for ws in wb.worksheets:
 
 
 # Scenario snapshot: values from recalculating the workbook with Assumptions!B4 = 1, 2, 3
-SNAPSHOT = {  # scenario: (value per share, upside, FY31 revenue, FY31 GAAP op margin, FY31 FCF)
-    "1": (179.9113, -0.2375, 58522.1, 0.2241, 15916.5),
-    "2": (230.3644, -0.0237, 67037.0, 0.2489, 20151.8),
-    "3": (265.0172, 0.1232, 72624.8, 0.2642, 23023.8),
+SNAPSHOT = {  # SNAPSHOT_DATA: headline, upside, exit value, FY31 rev, FY31 GAAP margin, FY31 FCF, FY31 UFCF
+    "1": (171.48, -0.2733, 195.58, 58522.14, 0.2564, 17421.17, 12818.23),
+    "2": (221.76, -0.0601, 245.31, 67037.02, 0.2822, 21933.84, 16508.77),
+    "3": (255.81, 0.0842, 279.56, 72624.80, 0.2980, 24985.56, 19022.26),
 }
-for col, s in zip("BCD", ("1", "2", "3")):
-    for r, (v, f) in enumerate(zip(SNAPSHOT[s], ["$#,##0.00", "0.0%;(0.0%)", "#,##0", "0.0%", "#,##0"]), start=27):
+FMTS = ["$#,##0.00", "0.0%;(0.0%)", "$#,##0.00", "#,##0", "0.0%", "#,##0", "#,##0"]
+for col, sc in zip("BCD", ("1", "2", "3")):
+    for r, (v, f) in enumerate(zip(SNAPSHOT.get(sc, [None] * 7), FMTS), start=29):
         c = cv[f"{col}{r}"]
         c.value = v
         c.number_format = f
         c.font = Font(name="Arial", size=10, italic=True)
-cv["A32"] = "Snapshot uses base valuation inputs (WACC, terminal growth, exit multiple) in all three scenarios."
-cv["A32"].font = ITAL
+cv["A36"] = "Snapshot uses base valuation inputs (WACC, terminal growth, exit multiple) in all three scenarios."
+cv["A36"].font = ITAL
 
 OUT = Path(__file__).resolve().parent.parent / "model" / "Salesforce_CRM_Model.xlsx"
 wb.save(OUT)
