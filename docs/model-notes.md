@@ -54,7 +54,8 @@ The README keeps the four that move the answer most. The full list:
 - **EV:** share price × shares (market cap ÷ reference price on the MarketScreener page) + the page's net debt for the current fiscal year.
 - **Implied CRM value:** peer multiple × CRM's NTM metric, then the DCF's equity bridge (cash, securities, 80% of strategic investments, less debt) over 830M diluted shares, so comps and DCF differ only in enterprise value.
 - **Peer set:** ServiceNow, Oracle, Adobe, Workday, SAP. Microsoft is a reference row only and is excluded from the median. "Growth-matched" peers are those whose NTM revenue growth is within 2 points of CRM's (Adobe, Workday, SAP).
-- **Caveats:** consensus EBITDA is analysts' adjusted EBITDA, which excludes stock comp. EPS bases differ by company, so P/E is the least reliable multiple. ServiceNow reported after the Oct 28 close and fell 19–27% on Oct 29, which would lower its multiples and the peer median.
+- **EPS basis:** MarketScreener's EPS is GAAP for every company (it matches reported figures, e.g. CRM FY25 $6.36 and FY26 $7.80). CRM's FY27 consensus ($10.45) includes $2.43/share of Q2 gains on strategic investments, which is why FY28 ($9.77) looks lower; the script subtracts it (`eps_cur_fy_one_offs`), giving NTM EPS of $9.33 and a 25.9x P/E. Peers' one-offs are not adjusted.
+- **Caveats:** consensus EBITDA is analysts' adjusted EBITDA, which excludes stock comp, while P/E is on GAAP earnings; the two bases differ by design. P/E is the least reliable multiple. ServiceNow reported after the Oct 28 close and fell 19–27% on Oct 29, which would lower its multiples and the peer median.
 
 ## Workbook tabs
 
@@ -85,6 +86,6 @@ python scripts/comps.py         # comps table and implied values
 
 ## Changelog
 
-- **Call and comps (Oct 29, 2026).** Repriced at the Oct 28 close ($242.11) with the 10-year at 4.99%; base value $228.11 (was $221.76, mainly the lower risk-free rate). Added the rating rule and call (Hold, price target $228), trading comps against five peers with Microsoft as reference, and the thesis, key debate and risks. README restructured story-first; technical detail moved here.
+- **Call and comps (Oct 29, 2026).** Repriced at the Oct 28 close ($242.11) with the 10-year at 4.99%; base value $228.11 (was $221.76, mainly the lower risk-free rate). Added the rating rule and call (Hold, price target $228), trading comps against five peers with Microsoft as reference, and the thesis, key debate and risks. README restructured story-first; technical detail moved here. CRM's FY27 EPS in the comps now excludes the $2.43 one-off investment gain (P/E 24.4x → 25.9x).
 - **Second review (Oct 15, 2026).** 13x exit multiple disclosed as calibrated, with today's market multiple shown for context; margin path compared with management's "50 by FY30" target; historical working-capital lines filled from the reported cash flow statements (FY25–FY26 plug now max 10.6% of CFO, was 26.8%); screenshots added.
 - **Model review (Oct 15, 2026).** Amortization of acquired intangibles moved out of the cost percentages so its roll-off raises operating income; headline switched to perpetuity growth with a 13x exit multiple as a cross-check (was a 50/50 blend with 16x, which implied 4.9% growth forever); both FCF definitions labeled; lease wording corrected; the cash-flow tie-out check (which could not fail) replaced by a plug-size disclosure; 10-year yield re-sourced to FRED and beta to a named 5-year monthly window. Base value moved from $230.36 to $221.76.

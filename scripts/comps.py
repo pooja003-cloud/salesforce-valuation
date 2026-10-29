@@ -28,6 +28,9 @@ for r in rows:
     rev_ntm = ntm("rev_cur_fy", "rev_next_fy")
     rev_ltm = w * f["rev_prev_fy"] + (1 - w) * f["rev_cur_fy"]
     ebitda_ntm = ntm("ebitda_cur_fy", "ebitda_next_fy")
+    # EPS is GAAP for every company (MarketScreener; matches reported FY figures). Strip known one-offs from the
+    # current FY so both years reflect ongoing earnings: CRM FY27 includes $2.43/share of Q2 strategic-investment gains.
+    f["eps_cur_fy"] -= f["eps_cur_fy_one_offs"]
     eps_ntm = ntm("eps_cur_fy", "eps_next_fy")
     mcap = f["price_oct28"] * f["shares_mm"]
     ev = mcap + f["net_debt_mm"]

@@ -39,9 +39,9 @@ The actual price, $242, sits between the middle and optimistic stories, so the m
 
 ## Checking against similar companies
 
-A second way to value a business is to look at what investors pay for similar ones, like checking what comparable houses on the street sold for. I compared Salesforce with ServiceNow, Oracle, Adobe, Workday and SAP. At their typical prices, Salesforce would be worth about $238–$286 a share, more than my $228.
+A second way to value a business is to look at what investors pay for similar ones, like checking what comparable houses on the street sold for. I compared Salesforce with ServiceNow, Oracle, Adobe, Workday and SAP. At their typical prices, Salesforce would be worth about $247–$286 a share, more than my $228.
 
-The main reason is that the market mostly ignores the cost of paying staff in shares, while I count it. The other is that some of those companies are growing much faster than Salesforce. The ones growing at a similar pace point to about $238–$266.
+The main reason is that the market mostly ignores the cost of paying staff in shares, while I count it. The other is that some of those companies are growing much faster than Salesforce. The ones growing at a similar pace point to about $224–$266, right around my number.
 
 ## The call
 
