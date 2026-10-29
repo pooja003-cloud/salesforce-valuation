@@ -1,0 +1,8 @@
+ticker,company,role,currency,price_oct28,market_cap_mm,ev_mm,ntm_revenue_mm,ntm_ebitda_mm,ntm_eps,ev_ntm_revenue,ev_ntm_ebitda,ntm_pe,ntm_revenue_growth,ntm_ebitda_margin
+CRM,Salesforce,subject,USD,242.11,199257,225010,49670,19992,9.942,4.53,11.3,24.4,0.101,0.402
+NOW,ServiceNow,peer,USD,150.13,155219,153279,18763,7102,2.192,8.17,21.6,68.5,0.193,0.379
+ORCL,Oracle,peer,USD,144.54,438173,554432,107659,61400,7.679,5.15,9.0,18.8,0.399,0.57
+ADBE,Adobe,peer,USD,249.76,97207,96839,28835,13726,21.164,3.36,7.1,11.8,0.093,0.476
+WDAY,Workday,peer,USD,204.36,50211,48528,11504,4006,6.066,4.22,12.1,33.7,0.107,0.348
+SAP,SAP,peer,EUR,211.2,243767,241788,44203,14359,7.963,5.47,16.8,26.5,0.114,0.325
+MSFT,Microsoft,reference,USD,531.01,3943015,3891173,416832,258170,21.013,9.34,15.1,25.3,0.185,0.619

@@ -2,7 +2,7 @@
 
 ## The one-line version
 
-Buying a share is buying a small piece of a business. This project works out whether one share of Salesforce is a fair price for the money that business will make over time. The answer: it's worth about $222, a little below the $236 it trades at.
+Buying a share is buying a small piece of a business. This project works out whether one share of Salesforce is a fair price for the money that business will make over time. The answer: it's worth about $228, a little below the $242 it traded at on October 28, 2026. My call is **Hold**.
 
 ## Whose question is this?
 
@@ -31,11 +31,21 @@ Salesforce makes software that businesses use to manage their customers, sold on
 
 | Story | What happens | Fair price |
 |---|---|---:|
-| Gloomy | Growth slows, AI costs eat into profits | ~$171 |
-| Middle | Roughly what the company itself expects | ~$222 |
-| Optimistic | Its AI products take off | ~$256 |
+| Gloomy | Growth slows, AI costs eat into profits | ~$176 |
+| Middle | Roughly what the company itself expects | ~$228 |
+| Optimistic | Its AI products take off | ~$263 |
 
-The actual price, $236, sits between the middle and optimistic stories, so the market is leaning slightly toward the hopeful version.
+The actual price, $242, sits between the middle and optimistic stories, so the market is leaning slightly toward the hopeful version.
+
+## Checking against similar companies
+
+A second way to value a business is to look at what investors pay for similar ones, like checking what comparable houses on the street sold for. I compared Salesforce with ServiceNow, Oracle, Adobe, Workday and SAP. At their typical prices, Salesforce would be worth about $238–$286 a share, more than my $228.
+
+The main reason is that the market mostly ignores the cost of paying staff in shares, while I count it. The other is that some of those companies are growing much faster than Salesforce. The ones growing at a similar pace point to about $238–$266.
+
+## The call
+
+I use a simple rule: if my value is more than 15% above the price, it's a Buy; more than 10% below, a Sell; anything in between, a Hold. At $228 against $242 the gap is about −6%, so it's a **Hold**: not a bargain, not badly overpriced.
 
 ## What I learned
 
@@ -49,5 +59,5 @@ The actual price, $236, sits between the middle and optimistic stories, so the m
 ## The outcome
 
 1. A full model that turns Salesforce's real financial reports into a fair value per share.
-2. A clear conclusion: worth about $222, slightly less than it costs. Buying only makes sense if you believe its AI push will beat expectations.
+2. A clear conclusion: worth about $228, slightly less than it costs, so a Hold. Buying only makes sense if you believe its AI push will beat expectations.
 3. Three scenarios and sensitivity tables showing how the answer changes when assumptions change.

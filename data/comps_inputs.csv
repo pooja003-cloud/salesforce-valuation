@@ -1,0 +1,8 @@
+ticker,company,role,currency,fy_end,months_left_in_current_fy,price_oct28,price_source,shares_mm,net_debt_mm,rev_prev_fy,rev_cur_fy,rev_next_fy,ebitda_cur_fy,ebitda_next_fy,eps_cur_fy,eps_next_fy,cur_fy_label,consensus_snapshot
+CRM,Salesforce,subject,USD,Jan,3,242.11,fool.com quote (Oct 28 close),823.0,25753,41525,46297,50795,18870,20366,10.45,9.773,FY Jan-2027,MarketScreener 2026-10-05
+NOW,ServiceNow,peer,USD,Dec,2,150.13,fool.com quote (Oct 28 close),1033.9,-1940,13278,16219,19272,6060,7311,1.577,2.315,FY Dec-2026,MarketScreener 2026-10-20
+ORCL,Oracle,peer,USD,May,7,144.54,fool.com.au quote (Oct 28 close),3031.5,116259,67357,90425,131787,51942,74642,6.643,9.13,FY May-2027,MarketScreener 2026-10-28
+ADBE,Adobe,peer,USD,Nov,1,249.76,fool.com quote (prior close on Oct 29),389.2,-367.7,23769,26607,29038,12722,13817,18.24,21.43,FY Nov-2026,MarketScreener 2026-10-16
+WDAY,Workday,peer,USD,Jan,3,204.36,fool.com quote (Oct 28 close),245.7,-1683,9552,10667,11783,3578,4148,5.729,6.178,FY Jan-2027,MarketScreener 2026-09-22
+SAP,SAP,peer,EUR,Dec,2,211.20,boerse.de Xetra (Oct 28 close),1154.2,-1979,36800,40264,44991,12772,14676,7.065,8.143,FY Dec-2026,MarketScreener 2026-10-09
+MSFT,Microsoft,reference,USD,Jun,8,531.01,stockanalysis.com (Oct 28 close),7425.5,-51842,331839,391271,467955,239452,295606,19.72,23.6,FY Jun-2027,MarketScreener 2026-10-02

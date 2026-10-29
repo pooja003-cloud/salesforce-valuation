@@ -570,9 +570,9 @@ def dput(r, text, val, fmt=NUM, inp=False, note=None, bold=False, key=False):
 
 
 label(D, 4, "Market & balance sheet inputs", section=True)
-dput(5, "Valuation date", datetime.date(2026, 10, 14), DATEF, True)
-dput(6, "Share price ($)", 235.95, USD, True, "NYSE close Oct 14, 2026 (stockanalysis.com)")
-dput(7, "Basic shares outstanding (mm)", 823, NUM, True, "Post-ASR; stockanalysis.com Oct 2026")
+dput(5, "Valuation date", datetime.date(2026, 10, 28), DATEF, True, "Date of the share price below; the call is dated this day")
+dput(6, "Share price ($)", 242.11, USD, True, "NYSE close Oct 28, 2026 (fool.com quote; trefis.com). Oct 29 intraday ~$231 after ServiceNow results hit software stocks")
+dput(7, "Basic shares outstanding (mm)", 823, NUM, True, "Post-ASR initial delivery; final ASR settlement (expected Oct 2026) not yet reported")
 dput(8, "Dilutive securities (mm)", 7, NUM, True, "Estimate for RSUs/options (treasury method)")
 dput(9, "Diluted shares (mm)", "=B7+B8", NUM, bold=True)
 dput(10, "Balance sheet date for net debt", datetime.date(2026, 7, 31), DATEF, True, "Latest 10-Q: Q2 FY27")
@@ -585,7 +585,7 @@ dput(16, "Treat SBC as a real cost? (1 = yes, 0 = add back)", 1, "0", True,
      "1 = do NOT add SBC back to FCF (conservative, dilution is real). 0 = sell-side style add-back", key=True)
 
 label(D, 18, "Discount rate (WACC)", section=True)
-dput(19, "Risk-free rate (10Y UST)", 0.0521, PCT, True, "FRED DGS10: 5.21% on Oct 13, 2026 (latest close before valuation date)")
+dput(19, "Risk-free rate (10Y UST)", 0.0499, PCT, True, "FRED DGS10: 4.99% on Oct 27, 2026 (latest print before valuation date)")
 dput(20, "Equity risk premium", 0.05, PCT, True, "Damodaran-style implied ERP range 4.5-5.5%")
 dput(21, "Levered beta", 1.26, '0.00', True, "Yahoo Finance 'Beta (5Y monthly)' 1.26 vs S&P 500; stockanalysis.com 'Beta (5Y)' 1.26")
 dput(22, "Cost of equity (CAPM)", "=B19+B21*B20", PCT, bold=True)
@@ -738,10 +738,11 @@ src = [
      "Salesforce Q4 FY24 earnings release, 8-K Ex. 99.1 (Feb 28, 2024): https://www.sec.gov/Archives/edgar/data/1108524/000110852424000002/crm-q4fy24xexhibit991.htm"),
     ("Q2 FY27 balance sheet (Jul 31, 2026), ASR, debt, raised FY27 guidance",
      "Salesforce Q2 FY27 earnings release (Aug 26, 2026): https://investor.salesforce.com/files/doc_financials/2027/q2/CRM-Q2-FY27-Earnings-Press-Release.pdf"),
-    ("Share price, shares outstanding", "stockanalysis.com/stocks/crm (close Oct 14, 2026)"),
+    ("Share price", "NYSE close Oct 28, 2026: $242.11 (fool.com/quote/nyse/crm; trefis.com Oct 29 article)"),
+    ("Shares outstanding", "823mm basic after the ASR initial delivery (Q2 FY27 release); final settlement not yet reported"),
     ("Beta", "Yahoo Finance 'Beta (5Y monthly)' = 1.26 (monthly returns vs S&P 500, 5 years); "
      "cross-checked with stockanalysis.com 'Beta (5Y)' = 1.26 (S&P Global data)"),
-    ("10-year Treasury yield", "FRED series DGS10 (Board of Governors via St. Louis Fed): 5.21% on Oct 13, 2026. "
+    ("10-year Treasury yield", "FRED series DGS10 (Board of Governors via St. Louis Fed): 4.99% on Oct 27, 2026. "
      "https://fred.stlouisfed.org/series/DGS10"),
     ("", ""),
     ("Combined balance sheet lines", "Capitalized contract costs, operating lease liabilities and debt combine current + noncurrent. "
@@ -763,7 +764,7 @@ cv.column_dimensions["A"].width = 74
 for c in "BCDE":
     cv.column_dimensions[c].width = 16
 put(cv, "A1", "Salesforce, Inc. (NYSE: CRM) - 3-Statement Model & DCF", TITLE)
-put(cv, "A2", "Built Oct 14, 2026. Base year FY2026A (Jan 31, 2026); forecast FY2027E-FY2031E. $ in millions.", ITAL)
+put(cv, "A2", "Priced Oct 28, 2026. Base year FY2026A (Jan 31, 2026); forecast FY2027E-FY2031E. $ in millions.", ITAL)
 
 put(cv, "A4", "Key outputs (live scenario)", BOLDW, fill=HEADFILL)
 for c in "BCD":
@@ -790,6 +791,15 @@ for i, (t, f, fmt) in enumerate(outs, start=5):
     put(cv, f"A{i}", t, BLACK)
     put(cv, f"B{i}", f, GREEN, fmt, bold=True)
 put(cv, "C12", "='Revenue Build'!B29", GREEN, bold=True)
+put(cv, "D5", "Call", BOLDW, fill=HEADFILL)
+cv["E5"].fill = HEADFILL
+put(cv, "D6", "Rating", BOLD)
+put(cv, "E6", '=IF(DCF!D76>0.15,"BUY",IF(DCF!D76<-0.1,"SELL","HOLD"))', BLACK, bold=True, fill=YELLOW)
+put(cv, "D7", "Price target ($)", BOLD)
+put(cv, "E7", "=DCF!D74", GREEN, USD, bold=True)
+put(cv, "D8", "Priced on", BOLD)
+put(cv, "E8", "=DCF!B5", GREEN, DATEF)
+put(cv, "D9", "Rule: upside > +15% Buy; -10% to +15% Hold; < -10% Sell", ITAL)
 
 put(cv, "A22", "Model integrity checks", BOLDW, fill=HEADFILL)
 for c in "BCD":
@@ -853,9 +863,9 @@ for ws in wb.worksheets:
 
 # Scenario snapshot: values from recalculating the workbook with Assumptions!B4 = 1, 2, 3
 SNAPSHOT = {  # SNAPSHOT_DATA: headline, upside, exit value, FY31 rev, FY31 GAAP margin, FY31 FCF, FY31 UFCF
-    "1": (171.48, -0.2733, 195.58, 58522.14, 0.2564, 17421.17, 12818.23),
-    "2": (221.76, -0.0601, 245.31, 67037.02, 0.2822, 21933.84, 16508.77),
-    "3": (255.81, 0.0842, 279.56, 72624.80, 0.2980, 24985.56, 19022.26),
+    "1": (176.43, -0.2713, 197.58, 58522.14, 0.2564, 17421.17, 12818.23),
+    "2": (228.11, -0.0578, 247.78, 67037.02, 0.2822, 21933.84, 16508.77),
+    "3": (263.10, 0.0867, 282.35, 72624.80, 0.2980, 24985.56, 19022.26),
 }
 FMTS = ["$#,##0.00", "0.0%;(0.0%)", "$#,##0.00", "#,##0", "0.0%", "#,##0", "#,##0"]
 for col, sc in zip("BCD", ("1", "2", "3")):
