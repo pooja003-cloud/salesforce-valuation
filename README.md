@@ -112,11 +112,6 @@ SEC filings ──► RPO revenue build ──► 3 statements ──► DCF ─
 - **Earnings-update note after Q3 FY27** (expected early December 2026; Yahoo estimates Dec 2, not yet confirmed by Salesforce): what beat or missed, three takeaways, and whether the rating changes.
 - **Refresh the comps each quarter** at a single price date.
 
-## How I used AI
-
-<!-- Edit so it is accurate in your own words. -->
-I set the question, scope and rating rule, made the judgment calls and reviewed the work; Claude (an AI assistant) pulled the figures from the SEC filings, wrote the Python script that builds the workbook, and drafted the write-ups, which I checked against an outside review before publishing.
-
 ## Run it
 
 ```bash
