@@ -6,9 +6,7 @@
 
 ## Why I built this
 
-I wanted to learn how investors actually decide what a stock is worth, so I valued one real company end to end from its own filings. Salesforce made it a live question: in 2026 it borrowed about $25B to buy back its own shares while betting heavily on AI agents.
-
-<!-- Make this yours: replace or extend the sentences above with your own reason, e.g. what you think AI agents do to per-seat software pricing, or where you stand on the stock-comp debate. -->
+In my master's I built a three-statement model and DCF for Coca-Cola by hand. For this project I switched roles: AI did the building and I acted as the auditor, on a harder company, a software business where deferred revenue, stock-based compensation and backlog drive the numbers. Salesforce made it a live question in 2026, with a $25B debt-funded buyback and a big bet on AI agents.
 
 ## The question and who it's for
 
@@ -96,6 +94,13 @@ SEC filings ──► RPO revenue build ──► 3 statements ──► DCF ─
 | Perpetuity growth as the headline method | It values the same cash flow the model forecasts | Exit multiple at 13x gives $248 as a cross-check |
 | 13x exit multiple, calibrated | Keeps implied growth near 3%; a de-rating from today's 18.4x, not taken from peers | Agreement between the two methods is by construction; see [notes](docs/model-notes.md#the-13x-exit-multiple-is-calibrated) |
 | WACC from current rates | 4.99% 10-year Treasury (FRED), not an old 8% template | At 8% WACC the base value would be ~$336 |
+
+## What I caught as the auditor
+
+- The exit multiple was a 50/50 blend with 16x, which implied 4.9% growth forever. It was switched to perpetuity growth as the headline, with a calibrated 13x cross-check.
+- Acquisition amortization was buried inside cost percentages, which hid its roll-off.
+- A cash-flow tie-out check could never fail, so it was replaced with an honest disclosure of the plug.
+- The working-capital plug was cut from 26.8% to 10.6% of CFO.
 
 ## What worked, what didn't
 
